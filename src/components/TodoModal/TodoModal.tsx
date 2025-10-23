@@ -13,13 +13,14 @@ type TodoModalProps = {
 export const TodoModal = ({ todo, onModalClose }: TodoModalProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     setIsLoading(true);
     setUser(null);
     getUser(todo.userId)
       .then(setUser)
-      .catch(err => console.error(`Error fetching user: ${err}`))
+      .catch(err => setErrorMessage(`Error fetching user: ${err}`))
       .finally(() => setIsLoading(false));
   }, [todo.userId]);
 
@@ -54,7 +55,6 @@ export const TodoModal = ({ todo, onModalClose }: TodoModalProps) => {
             </p>
 
             <p className="block" data-cy="modal-user">
-              {/* <strong className="has-text-success">Done</strong> */}
               <strong
                 className={cn({
                   'has-text-success': todo.completed,
@@ -64,9 +64,15 @@ export const TodoModal = ({ todo, onModalClose }: TodoModalProps) => {
                 {todo.completed ? 'Done' : 'Planned'}
               </strong>
 
-              {' by '}
+              {!errorMessage ? (
+                <>
+                  {' by '}
 
-              <a href={`mailto:${user?.email}`}>{user?.name}</a>
+                  <a href={`mailto:${user?.email}`}>{user?.name}</a>
+                </>
+              ) : (
+                errorMessage
+              )}
             </p>
           </div>
         </div>
