@@ -68,7 +68,7 @@ export const TodoModal = ({ todo, onModalClose }: TodoModalProps) => {
 
               {' by '}
 
-              <a href="mailto:Sincere@april.biz">{user?.name}</a>
+              <a href={`mailto:${user?.email}`}>{user?.name}</a>
             </p>
           </div>
         </div>
