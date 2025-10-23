@@ -18,6 +18,7 @@ export const TodoModal = ({ todo, onModalClose }: TodoModalProps) => {
   useEffect(() => {
     setIsLoading(true);
     setUser(null);
+    setErrorMessage('');
     getUser(todo.userId)
       .then(setUser)
       .catch(err => setErrorMessage(`Error fetching user: ${err}`))
