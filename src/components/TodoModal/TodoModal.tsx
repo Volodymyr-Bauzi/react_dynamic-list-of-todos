@@ -19,6 +19,7 @@ export const TodoModal = ({ todo, onModalClose }: TodoModalProps) => {
     setUser(null);
     getUser(todo.userId)
       .then(setUser)
+      .catch(err => console.error(`Error fetching user: ${err}`))
       .finally(() => setIsLoading(false));
   }, [todo.userId]);
 
